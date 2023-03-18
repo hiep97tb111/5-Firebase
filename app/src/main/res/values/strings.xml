@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">FirebaseDemo</string>
+    <string name="log_event">Log event</string>
 </resources>

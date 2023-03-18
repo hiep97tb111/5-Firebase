@@ -3,8 +3,11 @@ package com.example.firebasedemo
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
+import com.google.firebase.analytics.FirebaseAnalytics
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -13,6 +16,21 @@ class MainActivity : AppCompatActivity() {
 
         // test crashlytics
         eventCrashlytics()
+
+        // log event
+        findViewById<TextView>(R.id.tvLogEvent).setOnClickListener {
+            handleLogEvent()
+        }
+        
+    }
+
+    private fun handleLogEvent() {
+        val firebaseAnalytics = FirebaseAnalytics.getInstance(this)
+
+        val bundle = Bundle()
+        bundle.putString("key", "Manchester United");
+        firebaseAnalytics.logEvent("footballClub", bundle)
+        Log.e("Logger", "Manchester United")
     }
 
     @SuppressLint("SetTextI18n")
