@@ -29,4 +29,29 @@
         app:layout_constraintEnd_toEndOf="parent">
     </com.google.android.gms.ads.AdView>
 
+    <Button
+        android:id="@+id/btnRemoteConfig"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Remote Config"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvLogEvent"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:background="@android:color/holo_red_light"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/tvRemoteConfig"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnRemoteConfig"
+        android:gravity="center"
+        android:hint="Remote Config"
+        tools:ignore="HardcodedText"
+        android:padding="15dp"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

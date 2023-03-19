@@ -51,4 +51,8 @@ dependencies {
 
     // Ads
     implementation 'com.google.android.gms:play-services-ads:21.5.0'
+
+    // remote config
+    implementation 'com.google.firebase:firebase-config:21.2.1'
+
 }
