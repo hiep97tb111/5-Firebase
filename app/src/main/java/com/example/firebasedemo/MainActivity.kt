@@ -7,6 +7,9 @@ import android.util.Log
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import com.google.android.gms.ads.*
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.firebase.analytics.FirebaseAnalytics
 
 class MainActivity : AppCompatActivity() {
@@ -21,7 +24,57 @@ class MainActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.tvLogEvent).setOnClickListener {
             handleLogEvent()
         }
-        
+
+        // show ads banner
+        showAdsBanner()
+    }
+
+    private fun showAdsBanner() {
+        val adsBanner = findViewById<AdView>(R.id.adsBanner)
+        val adsRequest = AdRequest.Builder()
+            .build()
+        adsBanner.loadAd(adsRequest)
+
+        adsBanner.adListener = object: AdListener() {
+            override fun onAdClicked() {
+                // Code to be executed when the user clicks on an ad.
+                Log.e("Logger", "onAdClicked")
+            }
+            override fun onAdClosed() {
+                // Code to be executed when the user is about to return
+                // to the app after tapping on an ad.
+                Log.e("Logger", "onAdClosed")
+            }
+            override fun onAdFailedToLoad(adError : LoadAdError) {
+                // Code to be executed when an ad request fails.
+                Log.e("Logger", "onAdFailedToLoad: ${adError.responseInfo} ${adError.message}")
+            }
+            override fun onAdImpression() {
+                // Code to be executed when an impression is recorded
+                // for an ad.
+                Log.e("Logger", "onAdImpression")
+            }
+            override fun onAdLoaded() {
+                // Code to be executed when an ad finishes loading.
+                Log.e("Logger", "onAdLoaded")
+            }
+
+            override fun onAdOpened() {
+                // Code to be executed when an ad opens an overlay that
+                // covers the screen.
+                Log.e("Logger", "onAdOpened")
+            }
+        }
+
+        InterstitialAd.load(this,"ca-app-pub-3940256099942544/1033173712", adsRequest, object : InterstitialAdLoadCallback() {
+            override fun onAdFailedToLoad(adError: LoadAdError) {
+                Log.d("Logger Fail", adError?.toString())
+            }
+
+            override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                Log.d("Logger Success", interstitialAd.responseInfo.toString())
+            }
+        })
     }
 
     private fun handleLogEvent() {
