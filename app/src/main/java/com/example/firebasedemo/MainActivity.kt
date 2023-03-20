@@ -1,6 +1,7 @@
 package com.example.firebasedemo
 
 import android.annotation.SuppressLint
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.ViewGroup
@@ -11,6 +12,9 @@ import com.google.android.gms.ads.*
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.dynamiclinks.PendingDynamicLinkData
+import com.google.firebase.dynamiclinks.ktx.dynamicLinks
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 
@@ -35,6 +39,32 @@ class MainActivity : AppCompatActivity() {
             showRemoteConfig()
         }
 
+        // dynamic link
+        getDynamicLinkFromFirebase()
+
+    }
+
+    private fun getDynamicLinkFromFirebase() {
+        Firebase.dynamicLinks
+            .getDynamicLink(intent)
+            .addOnSuccessListener(this) { pendingDynamicLinkData: PendingDynamicLinkData? ->
+                // Get deep link from result (may be null if no link is found)
+                var deepLink: Uri? = null
+                if (pendingDynamicLinkData != null) {
+                    deepLink = pendingDynamicLinkData.link
+                }
+
+                if(deepLink != null){
+                    Log.e("Logger", deepLink.getQueryParameter("email").toString())
+                    Log.e("Logger", deepLink.getQueryParameter("password").toString())
+                }
+                // Handle the deep link. For example, open the linked
+                // content, or apply promotional credit to the user's
+                // account.
+                // ...
+
+            }
+            .addOnFailureListener(this) { e -> Log.e("Logger", "getDynamicLink:onFailure", e) }
     }
 
     private fun showRemoteConfig() {

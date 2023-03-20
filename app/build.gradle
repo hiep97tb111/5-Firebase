@@ -55,4 +55,8 @@ dependencies {
     // remote config
     implementation 'com.google.firebase:firebase-config:21.2.1'
 
+    // dynamic link
+    implementation 'com.google.firebase:firebase-dynamic-links-ktx'
+
+
 }
