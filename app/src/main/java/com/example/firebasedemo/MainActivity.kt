@@ -11,10 +11,13 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.dynamiclinks.PendingDynamicLinkData
 import com.google.firebase.dynamiclinks.ktx.dynamicLinks
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 
@@ -42,6 +45,23 @@ class MainActivity : AppCompatActivity() {
         // dynamic link
         getDynamicLinkFromFirebase()
 
+        registerFCMToken()
+
+    }
+
+//    Register for FCM token: To receive push notifications, your app must register with FCM to get a unique registration token.
+//    Add the following code to your app's onCreate() method to register your app with FCM
+    private fun registerFCMToken() {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener {
+            if(!it.isSuccessful){
+                Log.w("Logger FCM Failed", "Fetching FCM registration token failed", it.exception)
+                return@addOnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = it.result
+            Log.e("Logger Token", token)
+        }
     }
 
     private fun getDynamicLinkFromFirebase() {

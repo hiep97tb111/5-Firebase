@@ -58,5 +58,9 @@ dependencies {
     // dynamic link
     implementation 'com.google.firebase:firebase-dynamic-links-ktx'
 
+    // Firebase Messages
+    implementation 'com.google.firebase:firebase-messaging:23.1.2'
+
+
 
 }
